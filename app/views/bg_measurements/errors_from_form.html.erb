@@ -1,0 +1,11 @@
+  <% if @bg_measurement.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@bg_measurement.errors.count, "error") %> prohibited this bg_measurement from being saved:</h2>
+
+      <ul>
+      <% @bg_measurement.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>

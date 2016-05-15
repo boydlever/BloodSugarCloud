@@ -1,0 +1,12 @@
+<h2>Welcome to the Blood Sugar Cloud</h2>
+<%= form_tag sessions_path do %>
+<div class="field">
+	<%= label_tag :email %><br>
+	<%= text_field_tag :email %>
+</div>
+  <div class="field">
+    <%= label_tag :password %><br>
+	<%= password_field_tag :password %>
+  </div>
+    <%= submit_tag "Log In", :class => "button success round" %><%= link_to "Create Account", signup_path, :class => "button success round" %>
+<% end %>

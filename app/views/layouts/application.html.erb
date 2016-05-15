@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title><%= content_for?(:title) ? yield(:title) : "foundation-rails" %></title>
+
+    <%= stylesheet_link_tag    "application" %>
+    <%= javascript_include_tag "vendor/modernizr" %>
+    <%= javascript_include_tag "application" 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag "//www.google.com/jsapi", "chartkick" %>  	
+    <%= csrf_meta_tags %>
+  </head>
+
+<p id="notice"><%= notice %></p>
+  <body>
+	    <div class="large-6 columns">
+			<%= yield %>
+			<div id="user_header">
+				<% if current_user %>
+				<br/><br/><br/><br/>
+				  <span class="button small regular round"> <%= current_user.email %></span>    <%= link_to "Log Out", logout_path, :class => "button small alert round" %>
+				<% else %> 
+				<%#= link_to "Sign Up", signup_path, :class => "button success round", :id => "logout" %>
+				<%#= link_to "Log In", login_path, :class => "button success round", :id => "login" %>
+				<% end %>
+			</div>			
+		</div>
+	</div>
+	<%= javascript_include_tag "http://code.jquery.com/jquery-latest.min.js"  %>
+  </body>
+</html>

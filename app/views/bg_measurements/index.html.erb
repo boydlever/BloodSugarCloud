@@ -1,0 +1,48 @@
+<% unless current_user %>
+  <div style="text-align: center;">
+	  <h2>Welcome to the Blood Sugar Cloud</h2>
+	  <%= link_to "Create an Account",  signup_path, :class => "button success round" %><br/>
+	  <%= link_to "Log In", login_path, :class => "button success round" %>
+  </div>
+<% else %>
+	<h3 style="text-align: center;"><%= current_user.name %> BG Readings</h3>
+	<%= line_chart(@bg_measurements.all.map {|r| [(r.created_at - 3.hours), r.mg_dl]}) %>
+
+	<h3>Blood Sugar Readings</h3>
+
+	<table>
+	  <thead>
+	    <tr>
+	      <th>mg/dL</th>
+	      <th>Notes</th>
+	      <th>Patient</th>
+		  <th>Time of Reading</th>
+		  <th>Latitude</th>
+		  <th>Longitude</th>
+		  <th></th>
+	    </tr>
+	  </thead>
+
+	  <tbody>
+	    <% @bg_measurements.each do |bg_measurement| %>
+	      <tr>
+	        <td><%= bg_measurement.mg_dl %></td>
+	        <td><%= bg_measurement.notes %></td>
+	        <td><%= bg_measurement.user.name %></td>
+			<td><%= bg_measurement.created_at.strftime("%l:%M %p, %B %e, %Y %Z") %>
+			<td><%= bg_measurement.lat ? bg_measurement.lat.round(6) : "" %></td>
+			<td><%= bg_measurement.lng ? bg_measurement.lng.round(6) : ""%></td>
+			<% if bg_measurement.lat %>
+				<td><a href="http://maps.google.com?q=<%= bg_measurement.lat %>,<%= bg_measurement.lng %>">Map</a>
+		    <% else %>
+			    <td></td>
+			<% end %>
+	      </tr>
+	    <% end %>
+	  </tbody>
+	</table>
+
+	<br>
+
+	<p><%= link_to 'Add New Reading', new_bg_measurement_path, :class => 'button success round' %></p>
+<% end%>

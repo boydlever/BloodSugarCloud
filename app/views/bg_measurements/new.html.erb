@@ -1,0 +1,8 @@
+<h1>New bg_measurement</h1>
+
+<% if current_user %>
+	<%= render 'form' %>
+<% else %>
+  <h2>You must be logged in to add a blood sugar measurement</h2>
+  <%= link_to "Log in", login_path %>
+<% end %>

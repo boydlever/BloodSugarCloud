@@ -1,0 +1,34 @@
+<% if current_user && current_user.email == "ddd1600@gmail.com" %>
+	<h1>Listing users</h1>
+
+	<table>
+	  <thead>
+	    <tr>
+	      <th>Name</th>
+	      <th>Email</th>
+	      <th></th>
+	      <th></th>
+	      <th></th>
+	    </tr>
+	  </thead>
+
+	  <tbody>
+	    <% @users.each do |user| %>
+	      <tr>
+	        <td><%= link_to user.name, bg_measurements_path(:user_id => user.id) %></td>
+	        <td><%= user.email %></td>
+	        <td><%#= link_to 'Show', user %></td>
+	        <td><%#= link_to 'Edit', edit_user_path(user) %></td>
+	        <td><%#= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+	      </tr>
+	    <% end %>
+	  </tbody>
+	</table>
+
+	<br>
+
+	<%= link_to 'New User', new_user_path, :class => 'button success round' %>
+<% else %>
+  <h3>You don't have administrative privileges to view this page.</h3>
+  <%= link_to "Go back", root_url %>
+<% end %>

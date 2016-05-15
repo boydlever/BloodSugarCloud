@@ -1,0 +1,60 @@
+<style>
+	#leave_to_chart { display: none; }
+	#logout {display: none;}
+</style>
+
+<script type="text/javascript">
+	//var get_location = function(url) {
+	var currPosition;
+	navigator.geolocation.getCurrentPosition(function(position) {
+		updatePosition(position);
+			console.log("running getCurrentPosition...");
+			var lat = position.coords.latitude;
+			var lng = position.coords.longitude;
+			console.log("lat=" + lat + ", lng=" + lng);
+	//		x = url + "&lat=" + lat + "&lng=" + lng;
+			url = "<%= update_location_path %>" + "?lat=" + lat + "&lng=" + lng + "&id=" + "<%= @bg_measurement.id %>";
+			console.log("about to try to run an ajax request using this url: " + url);
+			$.getJSON(url, function(data) {
+				data = data.table;
+				console.log(data);
+			});
+			$("#location_services_status").html("Location data received. Routing to chart.")
+			window.location.replace("<%= bg_measurements_path %>")
+
+	}, errorCallback);
+
+	function updatePosition(position) {
+		currPosition = position;
+	}
+
+	function errorCallback(error) {
+		var msg = "Cand get your location. Error = ";
+		if (error.code == 1)
+			msg += "PERMISSION DENIED";
+		else if (error.code == 2)
+			msg += "POSITION UNAVAILABLE";
+		else if (error.code == 3)
+			msg += "TIMEOUT";
+		msg += ", msg = "+error.message;
+		alert(msg);
+	}
+</script>
+<span id="location_services_status">Receiving location data...PLEASE WAIT</span>
+<p>
+  <strong>Mg dl:</strong>
+  <%= @bg_measurement.mg_dl %>
+</p>
+
+<p>
+  <strong>Notes:</strong>
+  <%= @bg_measurement.notes %>
+</p>
+
+<p>
+  <strong>Patient:</strong>
+  <%= @bg_measurement.user.name %>
+</p>
+
+
+<%= link_to 'Go to Chart', bg_measurements_path, :id => "leave_to_chart", :class => "button small round success" %>

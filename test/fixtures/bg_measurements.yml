@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  mg_dl: 1.5
+  notes: MyText
+  patient_id: 
+
+two:
+  mg_dl: 1.5
+  notes: MyText
+  patient_id: 
